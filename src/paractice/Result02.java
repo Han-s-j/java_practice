@@ -14,12 +14,39 @@ public class Result02 {
 //	   }
 //	   int randInt =  (int) (Math.random() * 50 + 1);  // 1 ~ 5 사이 정수
 //	   System.out.println(randInt);
-
+		System.out.println("== 업다운 게임을 시작합니다. == ");
+		System.out.println("1 ~ 50 중 랜덤 숫자 하나를 맞춰보세요.");
+		System.out.println("기회는 5번 입니다.");
+		System.out.println("=========================");
 		int randInt = (int) (Math.random() * 50 + 1); // 1 ~ 5 사이 정수
-		   System.out.println(randInt);
-		   Scanner scan = new Scanner(System.in);
+		//System.out.println(randInt);
+		Scanner scan = new Scanner(System.in);
+		
+		int chance = 5;		//기회 5번
+		while (chance >= 1) {
 			System.out.print("숫자를 입력해주세요.");
-//			string num = scan.nextLine(); int 변환필요
-			
+			String inputnum = scan.nextLine();		
+			int num = Integer.parseInt(inputnum);	//문자열 -> 정수 변경
+			if (randInt == num) {					//랜덤숫자 == 입력숫자 
+				System.out.println("정답입니다.");
+				break;								//종료
+			} else if (randInt > num) {				//랜덤숫자 > 입력숫자
+				chance--;							//기회 줄어들기
+				if (chance == 0) {					//기회가 0일 때
+					break;							//종료
+				}
+				System.out.println("업!! 기회가 " + chance + "번 남았습니다.");
+
+			} else {								//나머지
+				chance--;							//기회 줄어들기
+				if (chance == 0) {					//기회가 0일 때
+					break;							//종료
+				}
+				System.out.println("다운!! 기회가 " + chance + "번 남았습니다.");
+			}
+		}
+		if (chance == 0) {							//기회가 0일 때
+			System.out.println("실패하였습니다. 정답은" + randInt + "입니다.");
+		}
 	}
 }
