@@ -22,55 +22,13 @@
 배열 복사 중요함
 다차원 배열 자리
 
-package ch07_array;
-
-public class ArrayEx2 {
-	public static void main(String[] args) {
-		// Q. 윌리를 찾아라!
-		// findWally 문자열에 '월리'가 총 몇 개 있는지 출력하시오
-		String findWally = "윌리울리일리울리울리일리월리일리윌리월리울리일리일리월리일리윌리일리윌리일리월리월리윌리울리윌리울리일리울리울리윌리일리";
-
-//		int fixLength = 2;
-//		int strArraySize = (int) Math.ceil((double) findWally.length() / fixLength);
-//		String[] subFindWally = new String[strArraySize];
-
-//		int index = 0;
-//		for (int startIndex = 0; startIndex < findWally.length(); startIndex += fixLength) {
-//			subFindWally[index++] = findWally.substring(startIndex,
-//					Math.min(startIndex + fixLength, findWally.length()));
-//			System.out.println(subFindWally[2]);
-//			// 0. 반복문 만들기
-//			// 1. 문자열 자르기 2개씩
-
-//		String subFindWally = findWally.substring(0, 2);
-//		String subFindWally2 = findWally.substring(2, 4);
-//		String subFindWally3 = findWally.substring(4, 6);
-//		System.out.println(subFindWally);
-//		System.out.println(subFindWally2);
-//		System.out.println(subFindWally3);
-//		String [] arr = new String[findWally.length()/2];
-//		String[] arr = new String[3];
-//		arr[0] = subFindWally;
-//		arr[1] = subFindWally2;
-//		arr[2] = subFindWally3;
-//		System.out.println(arr[2]);
-//			// 2. 배열 0 자리 "월" 찾기
-//			// 3. 같으면 카운트
-//			int cnt = 0;
-		int a = 0;
-		int b = 2;
-		String[] arr2 = new String[findWally.length()/2];
-		for (int i = 0; i <= findWally.length()/2; i++) {
-
-			arr2[i] = findWally.substring(a, b);
-			a+=2;
-			b+=2;
-//			cnt++;
-//				}
-//			} 
-//			System.out.println("월리는 총:" + cnt);
-		}
-	}
-}
-
-//}
+04-02-2025
+배열 그냥 복사하면 ^주소복사^임 중요!!!
+clone을 이용해야 됨
+월리찾기 다시 해보기
+컬렉션의 종류 외우기
+리스트(List) : 데이터를 1차원으로 늘어놓은 형태의 자료구조 (index로 찾음)
+스택
+큐
+맵(Map) : 키를 이용 (value로 찾음)
+집합
