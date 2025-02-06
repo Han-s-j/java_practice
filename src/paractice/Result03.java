@@ -11,24 +11,23 @@ public class Result03 {
 //		Q.01
 //		로또번호 생성 메서드 1~45까지 랜덤 숫자 6개를 오름차순으로 출력하
 //		는 makeLotto() 만들어주세요 (로또 번호는 중복이 없습니다.)
-		
-		//System.out.println(makeLotto());
-		Set<Integer> myLotto = makeLotto();
-		// set to list
+
 		ArrayList<Integer> weekLotto = null;
-//		System.out.println(weekLooto);
 		weekLotto = makeLotto();
-		Collections.sort(weekLotto);	//오름차순
-//		System.out.println(weekLotto.toString());
-		
-		}
-	public static Set<Integer> makeLotto() {
+		System.out.println(weekLotto.toString());
+	}
+
+	public static ArrayList<Integer> makeLotto() {
 		Set<Integer> lotto = new HashSet<>();
-		//1 ~ 45 사이의 랜덤값 6개 생성
-		while(lotto.size() < 6) {
-			int num = (int) ((Math.random() * 45) + 1) ;
+		
+		// 1 ~ 45 사이의 랜덤값 6개 생성
+		while (lotto.size() < 6) {
+			int num = (int) ((Math.random() * 45) + 1);
 			lotto.add(num);
 		}
-		return lotto;
+		ArrayList<Integer> myLotto = new ArrayList<>(lotto);
+		Collections.sort(myLotto);
+		return myLotto;
+		
 	}
 }
