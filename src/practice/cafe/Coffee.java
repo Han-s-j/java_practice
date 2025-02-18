@@ -1,19 +1,33 @@
 package practice.cafe;
 
 public class Coffee {
+
+	private String name;	//음료이름
+	private int price;		// 가격
 	
-	String KorName;		// 음료 한글명
-	String EngName;		// 음료 영문명
-	int price;		// 가격
-	
-	public Coffee(String korName, String engName, int price) {
-		super();
-		this.KorName = korName;
-		this.EngName = engName;
+	public Coffee(String name, int price) {
+		this.name = name;
 		this.price = price;
 	}
-	
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "[" + name + ":" + price +"]";
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
 }
