@@ -1,7 +1,6 @@
 package practice.cafe;
 
 public class Coffee {
-
 	private String name;	//음료이름
 	private int price;		// 가격
 	

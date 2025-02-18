@@ -15,7 +15,7 @@ public class Cafe {
 	// 메뉴판 출력
 	void showMenu() {
 		for (int i = 0; i < menuList.size(); i++) {
-			System.out.println(menuList.get(i));
+			System.out.println(i+1 +". " +menuList.get(i));
 		}
 	}
 
@@ -29,17 +29,13 @@ public class Cafe {
 	}
 
 	// 음료 구매
-	void buyCoffee(Scanner scan2) {
-		for (int i = 0; i < menuList.size(); i++) {
-			if (menuList.get(i).equals(scan2)); {
-				System.out.println(menuList.get(i).getName() + "를" + menuList.get(i).getPrice() + "에 구매함");
-			}
-
+	void buyCoffee(Scanner scan) {
+		System.out.println("메뉴를 선택해주세요: ");
+		int userMenu = scan.nextInt();
+		if (userMenu >= 1 && userMenu <= menuList.size()) {
+			System.out.println(
+					menuList.get(userMenu - 1).getName() + "를 " + menuList.get(userMenu - 1).getPrice() + "원에 구매했습니다.");
 		}
-	}
-//		for(int i =0; i< menuList.size(); i++) {
-//			if(menuList.get(i).equals(choiceMenu));
-//				System.out.println(name + "를");
-//		}
 
+	}
 }
