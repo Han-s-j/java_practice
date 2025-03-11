@@ -93,3 +93,7 @@ https://api.upbit.com/v1/ticker?markets=KRW-BTC
 14-02-2025
 네트워크
 
+11-03-2025
+JDBC 활용
+드라이브 로드해서 접속 > connection 객체 생성 > 쿼리문 객체 생성
+
