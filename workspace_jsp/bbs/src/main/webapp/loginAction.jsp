@@ -1,5 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ page import="jdbc.UserService" %>
+<%@ page import="jdbc.UserVO" %>
+<%@ page import="java.io.PrintWriter" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +14,22 @@
 	<%
 		System.out.println(request.getParameter("userId"));
 		System.out.println(request.getParameter("userPw"));
+		UserService service = UserService.getInstance();
+		UserVO user = service.loginUser(request.getParameter("userId")
+										, request.getParameter("userPw"));
+		System.out.println(user);
+		PrintWriter script = response.getWriter();
+		script.println("<script>");
+		if(user != null){
+			session.setAttribute("userId", user.getUserId());
+			session.setMaxInactiveInterval(5 * 60);
+			script.println("' "+ user.getUserNm() + " 님 환영! '; ");
+			script.println("location.href='main.jsp'");
+		}else{
+			script.println("alert('아이디/비번을 확인하세요!'); ");
+			script.println("history.back();");
+		}
+		script.println("</script>");
 	%>
 </body>
 </html>
