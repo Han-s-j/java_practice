@@ -31,13 +31,15 @@ public class ConnectionFactory {
 			id = prop.getProperty("id");
 			pw = prop.getProperty("pw");
 			maxConn = Integer.parseInt(prop.getProperty("max"));
+			Class.forName(driver);
 			System.out.println(id+"|"+pw+"|"+url+"|"+driver+"|"+maxConn);
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 	public Connection getConnection() throws SQLException {
 		Connection conn = DriverManager.getConnection(url,id,pw);
+//		Connection conn = DriverManager.getConnection("jdbc:oracle:thin:@127.0.0.1:1521:xe","java","oracle");
 		return conn;
 	}
 	public static void main(String[] args) {
