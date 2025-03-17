@@ -2,6 +2,7 @@ package jdbc;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 // 비즈니스 로직을 처리하는 부분
 public class UserService {
@@ -30,6 +31,18 @@ public class UserService {
 		}
 		return null;
 	}
+	// 회원정보
+		public UserVO userInfo(String id) {
+			Connection conn = cp.getConnection();
+			try {
+				return dao.selectUser(conn, id);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}finally {
+				if(conn != null) cp.releaseConnection(conn);  // 사용 완료 후 돌려주기
+			}
+			return null;
+		}
 	// 회원가입
 	public int insertUser(UserVO vo) {
 		Connection conn = cp.getConnection();
@@ -43,5 +56,29 @@ public class UserService {
 		}
 		return 0;
 	}
-
+	// 게시글 조회
+	public ArrayList<BbsVO> bbsList(){
+		Connection conn = cp.getConnection();
+		try {
+			return dao.bbslistUserVO(conn);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if(conn != null) cp.releaseConnection(conn);
+		}
+		return null;
+	}
+	// 회원 정보 수정
+	public int updateUser(UserVO vo) {
+		Connection conn = cp.getConnection();
+		try {
+			return dao.updateUser(conn, vo);
+		} catch (SQLException e) {
+			System.out.println("변경되지 않음.");
+			e.printStackTrace();
+		} finally {
+			if(conn != null) cp.releaseConnection(conn);
+		}
+		return 0;
+	}
 }

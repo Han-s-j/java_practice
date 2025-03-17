@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 
 // DAO Data Access Object
@@ -54,6 +55,47 @@ public class UserDAO {
 		if(ps != null) ps.close();
 		// 정상적으로 insert 는 1
 		return cnt;
-		
+	}
+	// bbs 조회
+	public  ArrayList<BbsVO> bbslistUserVO(Connection conn) throws SQLException {
+		// DB 조회하는 부분
+		StringBuffer query = new StringBuffer();
+		query.append(" SELECT discussion_id");
+		query.append("      , item_code");
+		query.append("      , title");
+		query.append("      , writer_id");
+		query.append("      , read_count");
+		query.append(" FROM member.stock_bbs");
+		PreparedStatement ps = conn.prepareStatement(query.toString());
+		ResultSet rs = ps.executeQuery();
+		// 결과를 리턴
+		ArrayList<BbsVO> bbsArr = new ArrayList<BbsVO>();
+		UserVO vo = new UserVO();
+		while(rs.next() ) {
+			BbsVO bbs = new BbsVO();
+			bbs.setDiscussionId(rs.getString("discussion_id"));
+			bbs.setItemCode(rs.getString("item_code"));
+			bbs.setTitle(rs.getString("title"));
+			bbs.setWriterId(rs.getString("writer_id"));
+			bbs.setReadCount(rs.getString("read_count"));
+			bbsArr.add(bbs);
+		}
+		if(ps != null) ps.close();
+		if(rs != null) rs.close();
+		return bbsArr;
+	}
+	// 회원 정보 수정
+	public int updateUser(Connection conn, UserVO user) throws SQLException {
+		StringBuffer query = new StringBuffer();
+		// update문 '입력 아이디의 이름을 수정하는'  
+		query.append(" UPDATE tb_user");
+		query.append(" SET  user_nm =?");
+		query.append(" where user_id =?");
+		PreparedStatement ps = conn.prepareStatement(query.toString());
+		ps.setString(1, user.getUserId());	// 전달받은 이름과 아이디 사용
+		ps.setString(2, user.getUserNm());
+		int cnt = ps.executeUpdate();
+		if(ps != null) ps.close();
+		return cnt;
 	}
 }
