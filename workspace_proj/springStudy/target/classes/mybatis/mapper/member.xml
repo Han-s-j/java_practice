@@ -21,5 +21,11 @@
 		AND mem_pw = #{memPw}
 	
 	</select>
+	<update id="profileUpload" parameterType="MemberVO">
+			UPDATE members
+			SET profile_img = #{profileImg}
+			  , update_dt = SYSDATE
+			WHERE mem_id = #{memId}
+	</update>
 
 </mapper>
