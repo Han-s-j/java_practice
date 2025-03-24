@@ -18,7 +18,6 @@
 		FROM members
 		WHERE use_yn = 'Y'
 		AND mem_id = #{memId}
-		AND mem_pw = #{memPw}
 	
 	</select>
 	<update id="profileUpload" parameterType="MemberVO">

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.future.my.board.dao.IBoardDAO;
 import com.future.my.board.vo.BoardVO;
+import com.future.my.board.vo.ReplyVO;
 
 @Service
 public class BoardService {
@@ -40,5 +41,28 @@ public class BoardService {
 			throw new Exception();
 		}
 	}
+	// 댓글 등록
+	public int writeReply(ReplyVO vo) throws Exception {
+		int result = dao.writeReply(vo);
+		if (result == 0) {
+			throw new Exception();
+		}
+		return result;
+	}
+	// 댓글 조회
+	public ReplyVO getReply(String replyNo) {
+		return dao.getReply(replyNo);
+	}
+	// 댓글 목록 조회
+	public ArrayList<ReplyVO> getReplyList(int boardNo) {
+		return dao.getReplyList(boardNo);
+		
+	}
+	// 댓글 삭제
+	public int delReply(String replyNo) {
+		return dao.delReply(replyNo);
+	}
+	
+
 	
 }

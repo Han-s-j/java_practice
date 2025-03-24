@@ -1,24 +1,37 @@
 package com.future.my.board.web;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.future.my.board.service.BoardService;
 import com.future.my.board.vo.BoardVO;
+import com.future.my.board.vo.ReplyVO;
 
 @Controller
 public class BoardController {
 	
 	@Autowired
 	BoardService boardService;
+	
+	@ExceptionHandler(Exception.class)
+	public String errorView(Exception e) {
+		e.printStackTrace();
+		return "errorView";
+	}
+	
 	
 	@RequestMapping("/boardView")
 	public String boardView(Model model) {
@@ -47,7 +60,8 @@ public class BoardController {
 		System.out.println(boardNo);
 		BoardVO vo = boardService.getBoard(boardNo);
 		model.addAttribute("board",vo);
-		// TODO: 댓글 목록 조회
+		ArrayList<ReplyVO> replyList = boardService.getReplyList(boardNo);
+		model.addAttribute("replyList", replyList);
 		
 		return "board/boardDetailView";
 	}
@@ -61,5 +75,31 @@ public class BoardController {
 	public String boardEditDo(BoardVO board) throws Exception {
 		boardService.editBoard(board);
 		return "redirect:/boardView";
+	}
+	@ResponseBody // java class 객체를 json 데이터 형태로 리턴
+	@PostMapping("/writeReplyDo")
+	public ReplyVO writeReplyDo(@RequestBody ReplyVO vo) throws Exception {
+		System.out.println(vo);
+		Date date = new Date();
+		SimpleDateFormat fdr = new SimpleDateFormat("yyMMddHHmmssSSS");
+		String uniquId = fdr.format(date);
+		vo.setReplyNo(uniquId);
+		// 댓글 저장
+		boardService.writeReply(vo);
+		// 저장된 댓글 조회
+		ReplyVO result = boardService.getReply(uniquId);
+		
+		return result;
+	}
+	@ResponseBody
+	@PostMapping("/delReplyDo")
+	public String delReplyDo(@RequestBody ReplyVO vo) {
+		System.out.println(vo);
+		String result = "s";
+		int cnt = boardService.delReply(vo.getReplyNo());
+		if(cnt == 0) {
+			result = "f";
+		}
+		return result;
 	}
 }

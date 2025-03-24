@@ -23,7 +23,7 @@
                <!-- Contact Section Form-->
                <div class="row justify-content-center">
                    <div class="col-lg-8 col-xl-7">
-                   <form method="post" action="<c:url value="boardEditDo" />">
+                   		<form method="post" action="<c:url value="boardEditDo" />">
                 			<div class="mb-3">
                 				<label>제목</label>
                 				<input type="text" class="form-control" name="boardTitle" value=" ${board.boardTitle}">

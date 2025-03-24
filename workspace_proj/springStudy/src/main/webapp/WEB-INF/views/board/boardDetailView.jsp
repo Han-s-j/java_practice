@@ -49,7 +49,38 @@
                 			</c:if>
                    </div>
                </div>
+           		<!-- 댓글 -->
+           			<!-- 댓글작성  -->
+           			<div class="row justify-content-center pt-1">
+           				<div class="col-lg-8 col-xl-7 d-flex">
+           					<div class="col-lg-10">
+           						<input type="text" id="replyInput" class="form-control">
+           				</div>
+           				<div class="col-lg-2">
+           					<button type="button" onclick="fn_write()" class="btn btn-info me-2">등록</button>
+           				</div>
+           			</div>
+           		</div>
+           		<!-- 댓글 출력  -->
+           		<div class="row justify-content-center pt-1">
+           			<div class="col-lg-8 col-xl-7 d-flex">
+       					<table class="table">
+       						<tbody id="replyBody">
+       							<c:forEach items="${replyList}" var="reply">
+       								<tr id="${reply.replyNo}">
+       									<td>${reply.replyContent }</td>
+       									<td>${reply.memNm }</td>
+       									<td>${reply.replyDate }</td>
+       									<c:if test="${sessionScope.login.memId == reply.memId }">
+       										<td><a onclick="fn_del('${reply.replyNo}')">X</a></td>
+       									</c:if>
+       								</tr> 
+       							</c:forEach>
+       						</tbody>
+       					</table>
+           		</div>
            </div>
+           
        </section>
        <script>
        	document.getElementById("boardForm").addEventListener("submit", function(e){
@@ -60,8 +91,76 @@
        				return;
        			}
        			this.action= "<c:url value='/boardDeleteDo' />";
+       		}else{
+       			this.action= "<c:url value='/boardEditView' />";
        		}
        	});
+       	
+       	function fn_write() {
+       		var memId = '${sessionScope.login.memId}';
+       		var boardNo = '${board.boardNo}';
+       		var msg = $("#replyInput").val();
+       		if(memId == ''){
+       			alert("댓글은 로그인 해야함!!");
+       			return;
+       		}
+       		if(msg == ''){
+       			alert("내용을 작성해주세요!!");
+       			return;
+       		}
+       		
+       		var sendData = JSON.stringify({"memId":memId
+       									, "boardNo":boardNo
+       									, "replyContent":msg});
+       		console.log(sendData);
+       		$.ajax({
+       			url : '<c:url value="/writeReplyDo" />'
+       		   ,type : 'POST'
+       		   ,contentType : 'application/json'	/* 전송하는 데이터 타입 */
+       		   ,dataType : 'json'					/* 응답받는 데이터 타입 */
+       		   ,data : sendData
+       		   ,success:function(res){
+       			   console.log("응답!");
+       			   console.log(res);
+       			   $("#replyInput").val('');
+       			   var str ="";
+       			   str += "<tr id='"+res.replyNo"'>";
+       			   str += "<td>" +res.replyContent+ "</td>";
+       			   str += "<td>" +res.memNm + "</td>";
+       			   str += "<td>" +res.replyDate + "</td>";
+       			   str += "<td><a onclick='fn_del(\""+res.replyNo+"\")' >X</a></td>";
+       			   str += "</tr>";
+       			   $("#replyBody").prepend(str);
+       				
+       		   }
+       			,error : function(e){
+       				console.log(e);
+       			}
+       		});
+       	}
+       	
+       	// 댓글 삭제
+       	function fn_del(p_reNo){
+       		if(confirm("정말로 삭제!?")) {
+       			$.ajax({
+       				url : '<c:url value="/delReplyDo" />'
+       				,type : 'POST'
+       				,contentType: 'application/json'
+       				,dataType:'text'
+       				,data : JSON.stringify({"replyNo":p_reNo})
+       				,success:function(res){
+       					console.log("정상 처리");
+       					console.log(res);
+       					if(res == "s"){
+       						$("#"+p_reNo).remove();
+       					}
+       				},error:function(e){
+       					console.log(e);
+       				}
+       			});
+       		}
+       	}
+       	
        </script>
 	<jsp:include page="/WEB-INF/inc/footer.jsp"></jsp:include>
 </body>
