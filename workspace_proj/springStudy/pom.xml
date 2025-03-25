@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/maven-v4_0_0.xsd">
+	<!-- 수정 후 maven-update Porject -->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.future</groupId>
 	<artifactId>my</artifactId>
@@ -165,7 +166,7 @@
 		<groupId>com.fasterxml.jackson.core</groupId> 
 		<artifactId>jackson-databind</artifactId> <version>2.9.6</version> 
 		</dependency>
-		
+		<!-- security -->
 		<dependency>
 		  <groupId>org.springframework.security</groupId>
 		  <artifactId>spring-security-web</artifactId>
@@ -182,7 +183,14 @@
 		  <groupId>org.springframework.security</groupId>
 		  <artifactId>spring-security-taglibs</artifactId>
 		  <version>5.3.13.RELEASE</version>
-		</dependency> 
+		</dependency>
+		<!-- stringUtills blank check -->
+		<dependency>
+		 <groupId>org.apache.commons</groupId>
+		 <artifactId>commons-lang3</artifactId>
+		 <version>3.11</version>
+		</dependency>
+  
 	</dependencies>
     <build>
         <plugins>
