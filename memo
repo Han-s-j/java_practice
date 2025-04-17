@@ -160,6 +160,8 @@ jar 파일로 cmd에서 실행
 war 파일로 프로젝트 생성
 jsp 대신 thymeleaf 사용
 
+17-04-2025
+h2 Database
 
 
 
